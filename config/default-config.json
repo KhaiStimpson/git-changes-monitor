@@ -1,0 +1,25 @@
+{
+  "display": {
+    "showFilePathAndStatus": true,
+    "showLineChangeCounts": true,
+    "showStagedVsUnstaged": true,
+    "showFilePreview": true,
+    "showBranchInfo": true,
+    "showLastCommitInfo": true
+  },
+  "ui": {
+    "colorScheme": "default",
+    "refreshDebounceMs": 100,
+    "maxPreviewLines": 20
+  },
+  "keybindings": {
+    "quit": "q",
+    "refresh": "r",
+    "togglePreview": "p",
+    "help": "?",
+    "up": "up",
+    "down": "down",
+    "pageUp": "pageup",
+    "pageDown": "pagedown"
+  }
+}
