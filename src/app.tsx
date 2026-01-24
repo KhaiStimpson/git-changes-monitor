@@ -8,6 +8,7 @@ import HelpMenu from "./components/HelpMenu.tsx";
 import { useGitStatus } from "./hooks/useGitStatus.ts";
 import { useFileWatcher } from "./hooks/useFileWatcher.ts";
 import { useConfig } from "./hooks/useConfig.ts";
+import { useTheme } from "./theme/useTheme.ts";
 
 interface AppProps {
   repoPath: string;
@@ -17,6 +18,7 @@ interface AppProps {
 
 export default function App({ repoPath, configPath, watchMode }: AppProps) {
   const config = useConfig(configPath);
+  const theme = useTheme(config.ui.colorScheme);
   const { status, refresh, error } = useGitStatus(repoPath);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [showHelp, setShowHelp] = useState(false);
@@ -91,22 +93,24 @@ export default function App({ repoPath, configPath, watchMode }: AppProps) {
         alignItems="center"
         width="100%"
         height="100%"
+        backgroundColor={theme.base}
       >
-        <text fg="#FF0000" bold={true}>Error</text>
-        <text fg="#FF0000">{error}</text>
+        <text fg={theme.error} bold={true}>Error</text>
+        <text fg={theme.error}>{error}</text>
         <text> </text>
-        <text fg="#888888">Press {config.keybindings.quit} or Esc to quit</text>
+        <text fg={theme.subtext}>Press {config.keybindings.quit} or Esc to quit</text>
       </box>
     );
   }
 
   return (
-    <box flexDirection="column" width="100%" height="100%">
+    <box flexDirection="column" width="100%" height="100%" backgroundColor={theme.base}>
       {config.display.showBranchInfo && (
         <BranchInfo
           branch={status.branch}
           lastCommit={status.lastCommit}
           showLastCommit={config.display.showLastCommitInfo}
+          theme={theme}
         />
       )}
 
@@ -116,6 +120,7 @@ export default function App({ repoPath, configPath, watchMode }: AppProps) {
         selectedFile={selectedFile}
         onSelect={setSelectedFile}
         config={config}
+        theme={theme}
       />
 
       {showPreview && selectedFile && (
@@ -123,15 +128,21 @@ export default function App({ repoPath, configPath, watchMode }: AppProps) {
           file={selectedFile}
           repoPath={repoPath}
           maxLines={config.ui.maxPreviewLines}
+          theme={theme}
         />
       )}
 
-      <StatusBar keybindings={config.keybindings} isWatching={watchMode} />
+      <StatusBar
+        keybindings={config.keybindings}
+        isWatching={watchMode}
+        theme={theme}
+      />
 
       {showHelp && (
         <HelpMenu
           keybindings={config.keybindings}
           onClose={() => setShowHelp(false)}
+          theme={theme}
         />
       )}
     </box>

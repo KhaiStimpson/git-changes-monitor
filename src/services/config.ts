@@ -11,7 +11,7 @@ const DEFAULT_CONFIG: Config = {
     showLastCommitInfo: true,
   },
   ui: {
-    colorScheme: "default",
+    colorScheme: "catppuccin",
     refreshDebounceMs: 100,
     maxPreviewLines: 20,
   },

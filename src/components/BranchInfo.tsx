@@ -1,43 +1,63 @@
 import type { BranchInfo, CommitInfo } from "../types/git.ts";
+import type { Theme } from "../theme/useTheme.ts";
 
 interface BranchInfoProps {
   branch: BranchInfo;
   lastCommit?: CommitInfo;
   showLastCommit?: boolean;
+  theme: Theme;
 }
 
 export default function BranchInfoComponent({
   branch,
   lastCommit,
   showLastCommit = true,
+  theme,
 }: BranchInfoProps) {
-  const upstreamInfo = branch.upstream
-    ? ` → ${branch.upstream}`
-    : "";
-
-  const aheadBehind = [];
-  if (branch.ahead > 0) aheadBehind.push(`↑${branch.ahead}`);
-  if (branch.behind > 0) aheadBehind.push(`↓${branch.behind}`);
-  const trackingInfo = aheadBehind.length > 0 ? ` ${aheadBehind.join(" ")}` : "";
-
-  const commitInfo = showLastCommit && lastCommit
-    ? ` | ${lastCommit.subject} (${lastCommit.hash})`
-    : "";
+  const upstreamDisplay = branch.upstream ? ` → ${branch.upstream}` : "";
 
   return (
     <box
-      border={true}
-      borderStyle="single"
-      paddingLeft={1}
-      paddingRight={1}
-      height={3}
+      backgroundColor={theme.surface}
+      paddingLeft={2}
+      paddingRight={2}
+      paddingTop={1}
+      paddingBottom={1}
+      marginBottom={1}
     >
-      <text>
-        <text bold={true}>Branch:</text> {branch.name}
-        {upstreamInfo}
-        {trackingInfo}
-        {commitInfo}
-      </text>
+      <box flexDirection="row" gap={1}>
+        {/* Branch icon and name */}
+        <text fg={theme.subtext}></text>
+        <text fg={theme.accent} bold={true}>
+          {branch.name}
+        </text>
+
+        {/* Upstream info */}
+        {branch.upstream && (
+          <text fg={theme.subtext}>{upstreamDisplay}</text>
+        )}
+
+        {/* Ahead/Behind indicators */}
+        {branch.ahead > 0 && (
+          <text fg={theme.success}>↑{branch.ahead}</text>
+        )}
+        {branch.behind > 0 && (
+          <text fg={theme.error}>↓{branch.behind}</text>
+        )}
+
+        {/* Separator */}
+        {showLastCommit && lastCommit && (
+          <text fg={theme.subtext}>│</text>
+        )}
+
+        {/* Last commit info */}
+        {showLastCommit && lastCommit && (
+          <>
+            <text fg={theme.warning}>{lastCommit.hash}</text>
+            <text fg={theme.subtext}>{lastCommit.subject}</text>
+          </>
+        )}
+      </box>
     </box>
   );
 }

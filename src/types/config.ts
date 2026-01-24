@@ -7,8 +7,10 @@ export interface DisplayConfig {
   showLastCommitInfo: boolean;
 }
 
+export type ColorScheme = "catppuccin" | "nord" | "tokyo-night" | "dracula";
+
 export interface UIConfig {
-  colorScheme: "default" | "dark" | "light";
+  colorScheme: ColorScheme;
   refreshDebounceMs: number;
   maxPreviewLines: number;
 }
