@@ -92,10 +92,10 @@ export default function App({ repoPath, configPath, watchMode }: AppProps) {
         width="100%"
         height="100%"
       >
-        <text style={{ fg: "#FF0000", bold: true }}>Error</text>
-        <text style={{ fg: "#FF0000" }}>{error}</text>
+        <text fg="#FF0000" bold={true}>Error</text>
+        <text fg="#FF0000">{error}</text>
         <text> </text>
-        <text style={{ fg: "#888888" }}>Press {config.keybindings.quit} or Esc to quit</text>
+        <text fg="#888888">Press {config.keybindings.quit} or Esc to quit</text>
       </box>
     );
   }

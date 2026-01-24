@@ -29,11 +29,11 @@ export default function FileList({
       <text key={file.path}>
         {selectedMark}
         {stagedMark}
-        <span style={{ fg: getStatusColor(file.status) }}>
+        <text fg={getStatusColor(file.status)}>
           {statusIcon}
-        </span>{" "}
+        </text>{" "}
         {file.path}
-        <span style={{ fg: "#888888" }}>{changeCount}</span>
+        <text fg="#888888">{changeCount}</text>
       </text>
     );
   };
@@ -42,7 +42,7 @@ export default function FileList({
     <box flexDirection="column" flexGrow={1}>
       {config.display.showStagedVsUnstaged && stagedFiles.length > 0 && (
         <box flexDirection="column">
-          <text style={{ bold: true }}>
+          <text bold={true}>
             STAGED CHANGES ({stagedFiles.length})
           </text>
           {stagedFiles.map((file) =>
@@ -54,7 +54,7 @@ export default function FileList({
 
       {unstagedFiles.length > 0 && (
         <box flexDirection="column">
-          <text style={{ bold: true }}>
+          <text bold={true}>
             UNSTAGED CHANGES ({unstagedFiles.length})
           </text>
           {unstagedFiles.map((file) =>
@@ -65,7 +65,7 @@ export default function FileList({
 
       {stagedFiles.length === 0 && unstagedFiles.length === 0 && (
         <box justifyContent="center" alignItems="center" flexGrow={1}>
-          <text style={{ fg: "#888888" }}>No changes detected</text>
+          <text fg="#888888">No changes detected</text>
         </box>
       )}
     </box>

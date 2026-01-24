@@ -26,14 +26,15 @@ export default function FilePreview({
   return (
     <box
       flexDirection="column"
-      border
+      border={true}
       borderStyle="single"
       height={maxLines + 2}
-      padding={{ left: 1, right: 1 }}
+      paddingLeft={1}
+      paddingRight={1}
     >
-      <text style={{ bold: true }}>PREVIEW: {file}</text>
+      <text bold={true}>PREVIEW: {file}</text>
       {lines.map((line, i) => (
-        <text key={i} style={{ fg: getDiffLineColor(line) }}>
+        <text key={i} fg={getDiffLineColor(line)}>
           {line}
         </text>
       ))}

@@ -21,14 +21,15 @@ export default function StatusBar({
 
   return (
     <box
-      border
+      border={true}
       borderStyle="single"
       height={3}
-      padding={{ left: 1, right: 1 }}
+      paddingLeft={1}
+      paddingRight={1}
     >
       <text>
         {shortcuts.join(" | ")}
-        <span style={{ fg: "#888888" }}> | {watchStatus}</span>
+        <text fg="#888888"> | {watchStatus}</text>
       </text>
     </box>
   );

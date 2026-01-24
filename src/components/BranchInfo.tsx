@@ -26,13 +26,14 @@ export default function BranchInfoComponent({
 
   return (
     <box
-      border
+      border={true}
       borderStyle="single"
-      padding={{ left: 1, right: 1 }}
+      paddingLeft={1}
+      paddingRight={1}
       height={3}
     >
       <text>
-        <span style={{ bold: true }}>Branch:</span> {branch.name}
+        <text bold={true}>Branch:</text> {branch.name}
         {upstreamInfo}
         {trackingInfo}
         {commitInfo}

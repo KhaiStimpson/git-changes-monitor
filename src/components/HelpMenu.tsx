@@ -13,13 +13,13 @@ export default function HelpMenu({ keybindings, onClose }: HelpMenuProps) {
       top={5}
       width={60}
       height={20}
-      border
+      border={true}
       borderStyle="double"
       backgroundColor="#000000"
       padding={2}
     >
       <box flexDirection="column">
-        <text style={{ bold: true }}>Keyboard Shortcuts</text>
+        <text bold={true}>Keyboard Shortcuts</text>
         <text> </text>
         <text>Navigation:</text>
         <text>  ↑/↓ or j/k - Navigate file list</text>
@@ -34,7 +34,7 @@ export default function HelpMenu({ keybindings, onClose }: HelpMenuProps) {
         <text>  {keybindings.help} - Toggle this help menu</text>
         <text>  {keybindings.quit} or Esc - Quit application</text>
         <text> </text>
-        <text style={{ fg: "#888888" }}>
+        <text fg="#888888">
           Press {keybindings.help} or Esc to close
         </text>
       </box>
