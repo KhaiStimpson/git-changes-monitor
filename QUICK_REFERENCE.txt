@@ -1,72 +1,94 @@
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃  ✅ ALL ERRORS FIXED - READY TO RUN!                   ┃
+┃  🎉 RUST/RATATUI VERSION - READY TO RUN!              ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
 🎯 QUICK START
 ─────────────────────────────────────────────────────────
-  deno task start
+  cargo run
+
+Or build and install:
+  cargo build --release
+  cargo install --path .
 
 
-🔧 WHAT WAS FIXED
+🔧 DEVELOPMENT
 ─────────────────────────────────────────────────────────
-  ✅ Error 1: JSX syntax (style props)
-  ✅ Error 2: Package not found (jsr → npm)  
-  ✅ Error 3: React version (18 → 19)
-
-
-📦 FINAL DEPENDENCIES
-─────────────────────────────────────────────────────────
-  • @opentui/react  ^0.1.74  (npm)
-  • @opentui/core   ^0.1.74  (npm)
-  • react           ^19.0.0  (npm)
-  • react-dom       ^19.0.0  (npm)
-  • @cliffy/command ^1.0.0   (jsr)
-
-
-📝 FILES MODIFIED
-─────────────────────────────────────────────────────────
-  Core:
-    • deno.json              - Package versions updated
-  
-  Components (7):
-    • src/app.tsx            - Style props fixed
-    • src/components/*.tsx   - All 5 components fixed
-    • src/types/jsx.d.ts     - Created for types
-
-
-📚 DOCUMENTATION
-─────────────────────────────────────────────────────────
-  Read if you need help:
-    • ALL_FIXES_COMPLETE.md  ← Comprehensive summary
-    • ERRORS_FIXED.md        ← Error details
-    • QUICKSTART.md          ← Usage guide
-    • README.md              ← Full documentation
+  cargo run              # Run in dev mode
+  cargo build            # Build debug binary
+  cargo build --release  # Build optimized binary
+  cargo clippy           # Lint code
+  cargo fmt              # Format code
 
 
 ⌨️  KEYBOARD SHORTCUTS
 ─────────────────────────────────────────────────────────
-  ↑/↓     Navigate files
-  p       Toggle preview
-  r       Refresh
-  ?       Help
-  q/Esc   Quit
+  ↑/↓ or j/k   Navigate files
+  Tab/s        Switch staged/unstaged
+  p            Toggle preview
+  r            Refresh
+  ?            Help menu
+  q/Esc        Quit
+  Ctrl+C       Force quit
 
 
-🎯 EXPECTED OUTPUT
+📦 DEPENDENCIES
 ─────────────────────────────────────────────────────────
-  ┌─ Branch: main ↑2 ↓1 | Last commit... ─┐
-  │ STAGED CHANGES (3)                     │
-  │ ✓ M file.txt              +10 -5      │
-  ├─────────────────────────────────────── │
-  │ UNSTAGED CHANGES (2)                   │
-  │ > M another.txt            +3 -1       │
-  ├─────────────────────────────────────── │
-  │ PREVIEW: another.txt                   │
-  │ + new line                             │
-  │ - old line                             │
-  └────────────────────────────────────────┘
+  • ratatui               ^0.29   - TUI framework
+  • crossterm             ^0.28   - Terminal control
+  • tokio                 ^1      - Async runtime
+  • notify                ^7      - File watching
+  • clap                  ^4      - CLI parsing
+  • serde/serde_json      ^1      - Config serialization
 
 
-✨ READY TO USE!
+📝 CONFIGURATION
 ─────────────────────────────────────────────────────────
-All errors have been fixed. Run: deno task start
+  Location:
+    ~/.config/git-file-monitor/gfm.json
+
+  Auto-created on first run with defaults.
+  See config/default-config.json for schema.
+
+
+🎯 USAGE
+─────────────────────────────────────────────────────────
+  gfm                              # Monitor current directory
+  gfm /path/to/repo                # Monitor specific repo
+  gfm --config ~/custom.json       # Custom config
+  gfm --no-watch                   # Single snapshot
+  gfm --help                       # Show help
+
+
+🎨 THEMES
+─────────────────────────────────────────────────────────
+  Available themes (set in config):
+    • catppuccin    (default)
+    • nord
+    • tokyo-night
+    • dracula
+
+
+✨ FEATURES
+─────────────────────────────────────────────────────────
+  ✅ Real-time file monitoring (watch mode)
+  ✅ Git status (staged/unstaged changes)
+  ✅ Diff preview panel
+  ✅ Branch info & last commit
+  ✅ 4 beautiful color themes
+  ✅ Fully configurable
+  ✅ Cross-platform (Windows, Mac, Linux)
+
+
+🎯 EXAMPLE OUTPUT
+─────────────────────────────────────────────────────────
+  ┌─ Branch Info ──────────────────────────────────────┐
+  │ Branch: main                                       │
+  │ Commit: a1b2c3d - Initial commit (User)            │
+  └────────────────────────────────────────────────────┘
+  ┌─ Files ──────────┐┌─ Preview: file.txt ───────────┐
+  │ UNSTAGED (2)     ││ Select a file to view diff    │
+  │ ▌○ ? file.txt    ││                                │
+  │  ○ M another.rs  ││                                │
+  └──────────────────┘└────────────────────────────────┘
+  ─────────────────────────────────────────────────────
+  q:quit  r:refresh  p:preview  ?:help  ↑/k:up  ↓/j:down
