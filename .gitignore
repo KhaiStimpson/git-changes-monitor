@@ -1,0 +1,35 @@
+# Deno
+deno.lock
+.deno/
+node_modules/
+npm-debug.log*
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Build output
+dist/
+build/
+gfm
+gfm.exe
+*.js
+*.d.ts
+*.map
+
+# Logs
+*.log
+
+# Coverage
+coverage/
+.coverage/
