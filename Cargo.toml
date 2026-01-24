@@ -1,0 +1,39 @@
+[package]
+name = "gfm"
+version = "0.1.0"
+edition = "2021"
+description = "Git File Monitor - A TUI for monitoring Git repository changes in real-time"
+authors = ["gfm contributors"]
+license = "MIT"
+repository = "https://github.com/your-username/git-changes-monitor-tui"
+keywords = ["git", "tui", "terminal", "monitor", "ratatui"]
+categories = ["command-line-utilities", "development-tools"]
+
+[dependencies]
+# TUI framework
+ratatui = "0.29"
+crossterm = { version = "0.28", features = ["event-stream"] }
+
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+tokio-util = "0.7"
+futures = "0.3"
+
+# File watching
+notify = "7"
+notify-debouncer-mini = "0.5"
+
+# CLI parsing
+clap = { version = "4", features = ["derive"] }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Utilities
+dirs = "5"
+color-eyre = "0.6"
+
+[[bin]]
+name = "gfm"
+path = "src/main.rs"
