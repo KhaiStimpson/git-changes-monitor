@@ -14,6 +14,9 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, app: &App) {
 
     let mut spans = Vec::new();
 
+    // Add leading padding
+    spans.push(Span::raw(" "));
+
     // Keybinding hints
     let keybindings = [
         ("q", "quit"),

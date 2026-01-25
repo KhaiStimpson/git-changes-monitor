@@ -10,6 +10,8 @@ use crate::app::{App, Section};
 use crate::git::types::{FileStatus, FileStatusType};
 use crate::theme::Theme;
 
+use super::utils::sanitize_text;
+
 /// Render the file list section
 pub fn render_file_list(frame: &mut Frame, area: Rect, app: &mut App) {
     let theme = &app.theme;
@@ -23,7 +25,7 @@ pub fn render_file_list(frame: &mut Frame, area: Rect, app: &mut App) {
         if !status.staged_files.is_empty() {
             // Section header
             items.push(ListItem::new(Line::from(vec![Span::styled(
-                format!(" STAGED CHANGES ({}) ", status.staged_files.len()),
+                format!("  STAGED CHANGES ({}) ", status.staged_files.len()),
                 Style::default()
                     .fg(theme.staged)
                     .add_modifier(Modifier::BOLD),
@@ -50,7 +52,7 @@ pub fn render_file_list(frame: &mut Frame, area: Rect, app: &mut App) {
         if !status.unstaged_files.is_empty() {
             // Section header
             items.push(ListItem::new(Line::from(vec![Span::styled(
-                format!(" UNSTAGED CHANGES ({}) ", status.unstaged_files.len()),
+                format!("  UNSTAGED CHANGES ({}) ", status.unstaged_files.len()),
                 Style::default()
                     .fg(theme.unstaged)
                     .add_modifier(Modifier::BOLD),
@@ -152,7 +154,7 @@ fn create_file_item<'a>(
     } else {
         Style::default().fg(theme.text)
     };
-    spans.push(Span::styled(file.path.clone(), path_style));
+    spans.push(Span::styled(sanitize_text(&file.path), path_style));
 
     // Line changes (if any)
     if file.lines_added > 0 || file.lines_deleted > 0 {

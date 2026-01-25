@@ -2,7 +2,7 @@ use ratatui::{
     layout::Rect,
     style::{Modifier, Style},
     text::{Line, Span},
-    widgets::{Block, Borders, Paragraph, Wrap},
+    widgets::{Block, Borders, Paragraph},
     Frame,
 };
 
@@ -19,8 +19,9 @@ pub fn render_file_preview(frame: &mut Frame, area: Rect, app: &App) {
         " Preview ".to_string()
     };
 
+    // Use TOP | RIGHT | BOTTOM (no LEFT border) since file_list's right border is adjacent
     let block = Block::default()
-        .borders(Borders::ALL)
+        .borders(Borders::TOP | Borders::RIGHT | Borders::BOTTOM)
         .border_style(Style::default().fg(theme.border))
         .title(Span::styled(
             title,
@@ -34,12 +35,11 @@ pub fn render_file_preview(frame: &mut Frame, area: Rect, app: &App) {
 
         let paragraph = Paragraph::new(lines)
             .block(block)
-            .wrap(Wrap { trim: false })
             .scroll((app.preview_scroll, 0));
 
         frame.render_widget(paragraph, area);
     } else {
-        let paragraph = Paragraph::new("Select a file to view diff")
+        let paragraph = Paragraph::new(" Select a file to view diff")
             .style(Style::default().fg(theme.subtext))
             .block(block);
         frame.render_widget(paragraph, area);
@@ -94,7 +94,7 @@ fn parse_diff_content<'a>(diff: &str, theme: &Theme) -> Vec<Line<'a>> {
 
     if lines.is_empty() {
         lines.push(Line::from(Span::styled(
-            "No diff available",
+            " No diff available",
             Style::default().fg(theme.subtext),
         )));
     }

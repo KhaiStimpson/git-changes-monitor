@@ -4,5 +4,6 @@ mod file_preview;
 mod help_menu;
 mod render;
 mod status_bar;
+mod utils;
 
 pub use render::render;

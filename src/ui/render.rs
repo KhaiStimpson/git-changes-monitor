@@ -32,9 +32,14 @@ pub fn render(frame: &mut Frame, app: &mut App) {
 
     // Content layout: file list and preview (side by side if preview is shown)
     if app.show_preview && app.config.display.show_file_preview {
+        // Calculate half width, giving any odd pixel to the left panel
+        let half = main_layout[1].width / 2;
         let content_layout = Layout::default()
             .direction(Direction::Horizontal)
-            .constraints([Constraint::Percentage(50), Constraint::Percentage(50)])
+            .constraints([
+                Constraint::Length(half),
+                Constraint::Min(0), // Takes remaining space
+            ])
             .split(main_layout[1]);
 
         render_file_list(frame, content_layout[0], app);

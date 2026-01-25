@@ -10,6 +10,8 @@ use crate::app::App;
 use crate::git::types::GitStatus;
 use crate::theme::Theme;
 
+use super::utils::sanitize_text;
+
 /// Render the branch info section
 pub fn render_branch_info(frame: &mut Frame, area: Rect, app: &App) {
     let theme = &app.theme;
@@ -47,10 +49,11 @@ fn build_branch_info_content<'a>(status: &GitStatus, theme: &Theme) -> Vec<Line<
     let mut lines = Vec::new();
 
     // Branch line
+    let branch_name = sanitize_text(&status.branch.name);
     let mut branch_spans = vec![
-        Span::styled("Branch: ", Style::default().fg(theme.subtext)),
+        Span::styled(" Branch: ", Style::default().fg(theme.subtext)),
         Span::styled(
-            status.branch.name.clone(),
+            branch_name,
             Style::default()
                 .fg(theme.accent)
                 .add_modifier(Modifier::BOLD),
@@ -59,8 +62,9 @@ fn build_branch_info_content<'a>(status: &GitStatus, theme: &Theme) -> Vec<Line<
 
     // Add upstream info
     if let Some(upstream) = &status.branch.upstream {
+        let upstream_name = sanitize_text(upstream);
         branch_spans.push(Span::styled(
-            format!(" -> {}", upstream),
+            format!(" -> {}", upstream_name),
             Style::default().fg(theme.subtext),
         ));
     }
@@ -89,18 +93,18 @@ fn build_branch_info_content<'a>(status: &GitStatus, theme: &Theme) -> Vec<Line<
 
     // Last commit line
     if let Some(commit) = &status.last_commit {
+        // Sanitize commit subject to remove emojis that cause width issues
+        let subject = sanitize_text(&commit.subject);
+        let author = sanitize_text(&commit.author);
         let commit_spans = vec![
-            Span::styled("Commit: ", Style::default().fg(theme.subtext)),
+            Span::styled(" Commit: ", Style::default().fg(theme.subtext)),
             Span::styled(commit.hash.clone(), Style::default().fg(theme.warning)),
             Span::styled(" - ", Style::default().fg(theme.subtext)),
             Span::styled(
-                truncate_string(&commit.subject, 50),
+                truncate_string(&subject, 50),
                 Style::default().fg(theme.text),
             ),
-            Span::styled(
-                format!(" ({})", commit.author),
-                Style::default().fg(theme.subtext),
-            ),
+            Span::styled(format!(" ({})", author), Style::default().fg(theme.subtext)),
         ];
         lines.push(Line::from(commit_spans));
     }
