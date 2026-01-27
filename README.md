@@ -14,17 +14,75 @@ A blazingly fast, real-time terminal user interface for monitoring Git repositor
 
 ## Installation
 
-### Prerequisites
+### Windows
 
-- [Rust](https://rustup.rs/) (1.70 or later)
-- Git installed and accessible in PATH
+#### Option 1: PowerShell Installer (Recommended)
+
+The easiest way to install on Windows is using the PowerShell installation script:
+
+```powershell
+irm https://raw.githubusercontent.com/KhaiStimpson/git-changes-monitor/main/install.ps1 | iex
+```
+
+**Security Note:** Review the script before running by visiting the [install.ps1](https://raw.githubusercontent.com/KhaiStimpson/git-changes-monitor/main/install.ps1) URL in your browser, or download and run locally:
+
+```powershell
+# Download and review the script first
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/KhaiStimpson/git-changes-monitor/main/install.ps1 -OutFile install.ps1
+# Review the script, then run it
+.\install.ps1
+```
+
+This will:
+- Download the latest release
+- Install to `%LOCALAPPDATA%\Programs\gfm`
+- Add to your PATH automatically
+- Enable easy updates by running the same command
+
+#### Option 2: Scoop Package Manager
+
+If you use [Scoop](https://scoop.sh/), you can install gfm with:
+
+```powershell
+scoop install https://raw.githubusercontent.com/KhaiStimpson/git-changes-monitor/main/gfm.json
+```
+
+To update:
+```powershell
+scoop update gfm
+```
+
+#### Option 3: Manual Installation
+
+1. Download `gfm-windows-x86_64.exe` from the [Releases page](https://github.com/KhaiStimpson/git-changes-monitor/releases)
+2. Rename it to `gfm.exe`
+3. Move it to a directory in your PATH (e.g., `C:\Program Files\gfm\`)
+
+### Linux
+
+Pre-built binaries for Linux are available on the [Releases page](https://github.com/KhaiStimpson/git-changes-monitor/releases).
+
+Download the appropriate binary:
+- `gfm-linux-x86_64` - Linux 64-bit (dynamically linked)
+- `gfm-linux-x86_64-musl` - Linux 64-bit (statically linked, works on most distributions)
+
+```bash
+# Download and install
+curl -L https://github.com/KhaiStimpson/git-changes-monitor/releases/latest/download/gfm-linux-x86_64 -o gfm
+chmod +x gfm
+sudo mv gfm /usr/local/bin/
+```
 
 ### From Source
 
+**Prerequisites:**
+- [Rust](https://rustup.rs/) (1.70 or later)
+- Git installed and accessible in PATH
+
 ```bash
 # Clone the repository
-git clone <repo-url>
-cd git-changes-monitor-tui
+git clone https://github.com/KhaiStimpson/git-changes-monitor
+cd git-changes-monitor
 
 # Install globally
 cargo install --path .
@@ -40,6 +98,39 @@ The binary will be available at `target/release/gfm` (or `gfm.exe` on Windows).
 ```bash
 # Coming soon
 cargo install gfm
+```
+
+## Updating
+
+### Windows
+
+To update gfm on Windows, simply run the installation command again:
+
+**PowerShell Installer:**
+```powershell
+irm https://raw.githubusercontent.com/KhaiStimpson/git-changes-monitor/main/install.ps1 | iex
+```
+
+**Scoop:**
+```powershell
+scoop update gfm
+```
+
+### Linux
+
+Download and replace the binary with the latest version:
+```bash
+curl -L https://github.com/KhaiStimpson/git-changes-monitor/releases/latest/download/gfm-linux-x86_64 -o gfm
+chmod +x gfm
+sudo mv gfm /usr/local/bin/
+```
+
+### From Source
+
+```bash
+cd git-changes-monitor
+git pull
+cargo install --path .
 ```
 
 ## Usage
@@ -197,9 +288,80 @@ src/
 - **Async operations**: Non-blocking Git commands and UI rendering
 - **Debounced updates**: Configurable debounce prevents excessive refreshes
 
+## Troubleshooting
+
+### Windows
+
+**PowerShell Execution Policy Error**
+
+If you get an error about execution policies when running the installer:
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+Then run the installer again.
+
+**"gfm is not recognized" after installation**
+
+1. Close and reopen your terminal (PATH changes require a new terminal session)
+2. Verify the installation directory is in your PATH:
+   ```powershell
+   $env:Path -split ';' | Select-String gfm
+   ```
+3. If not found, manually add it or run the installer again to update PATH
+
+**Antivirus blocking the download**
+
+Some antivirus software may flag the downloaded executable. This is a false positive. You can:
+1. Add an exception for the installation directory
+2. Download manually from GitHub Releases
+3. Build from source
+
+### Linux
+
+**Permission denied when running gfm**
+
+Make sure the binary is executable:
+```bash
+chmod +x gfm
+```
+
+**Command not found after installation**
+
+Ensure `/usr/local/bin` is in your PATH:
+```bash
+echo $PATH | grep /usr/local/bin
+```
+
+If not, add it to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.):
+```bash
+export PATH="/usr/local/bin:$PATH"
+```
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit issues or pull requests.
+
+### Release Process (for maintainers)
+
+The project uses GitHub Actions to automatically build and release binaries for Windows and Linux.
+
+To create a new release:
+
+1. Update the version in `Cargo.toml`
+2. Commit the version change
+3. Create and push a new tag:
+   ```bash
+   git tag v0.1.0
+   git push origin v0.1.0
+   ```
+4. GitHub Actions will automatically:
+   - Build binaries for Windows and Linux (including musl variant)
+   - Create a GitHub Release with the binaries attached
+   - Generate release notes from commits
+
+You can also manually trigger the workflow from the Actions tab if needed.
 
 ## License
 

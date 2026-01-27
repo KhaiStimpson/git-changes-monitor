@@ -1,0 +1,29 @@
+{
+    "version": "0.1.0",
+    "description": "Git File Monitor - A TUI for monitoring Git repository changes in real-time",
+    "homepage": "https://github.com/KhaiStimpson/git-changes-monitor",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/KhaiStimpson/git-changes-monitor/releases/download/v0.1.0/gfm-windows-x86_64.exe",
+            "hash": "",
+            "bin": [
+                [
+                    "gfm-windows-x86_64.exe",
+                    "gfm"
+                ]
+            ]
+        }
+    },
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/KhaiStimpson/git-changes-monitor/releases/download/v$version/gfm-windows-x86_64.exe",
+                "hash": {
+                    "url": "$url.sha256"
+                }
+            }
+        }
+    }
+}
