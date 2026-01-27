@@ -14,17 +14,66 @@ A blazingly fast, real-time terminal user interface for monitoring Git repositor
 
 ## Installation
 
-### Prerequisites
+### Windows
 
-- [Rust](https://rustup.rs/) (1.70 or later)
-- Git installed and accessible in PATH
+#### Option 1: PowerShell Installer (Recommended)
+
+The easiest way to install on Windows is using the PowerShell installation script:
+
+```powershell
+irm https://raw.githubusercontent.com/KhaiStimpson/git-changes-monitor/main/install.ps1 | iex
+```
+
+This will:
+- Download the latest release
+- Install to `%LOCALAPPDATA%\Programs\gfm`
+- Add to your PATH automatically
+- Enable easy updates by running the same command
+
+#### Option 2: Scoop Package Manager
+
+If you use [Scoop](https://scoop.sh/), you can install gfm with:
+
+```powershell
+scoop install https://raw.githubusercontent.com/KhaiStimpson/git-changes-monitor/main/gfm.json
+```
+
+To update:
+```powershell
+scoop update gfm
+```
+
+#### Option 3: Manual Installation
+
+1. Download `gfm-windows-x86_64.exe` from the [Releases page](https://github.com/KhaiStimpson/git-changes-monitor/releases)
+2. Rename it to `gfm.exe`
+3. Move it to a directory in your PATH (e.g., `C:\Program Files\gfm\`)
+
+### Linux
+
+Pre-built binaries for Linux are available on the [Releases page](https://github.com/KhaiStimpson/git-changes-monitor/releases).
+
+Download the appropriate binary:
+- `gfm-linux-x86_64` - Linux 64-bit (dynamically linked)
+- `gfm-linux-x86_64-musl` - Linux 64-bit (statically linked, works on most distributions)
+
+```bash
+# Download and install
+curl -L https://github.com/KhaiStimpson/git-changes-monitor/releases/latest/download/gfm-linux-x86_64 -o gfm
+chmod +x gfm
+sudo mv gfm /usr/local/bin/
+```
 
 ### From Source
 
+**Prerequisites:**
+- [Rust](https://rustup.rs/) (1.70 or later)
+- Git installed and accessible in PATH
+
 ```bash
 # Clone the repository
-git clone <repo-url>
-cd git-changes-monitor-tui
+git clone https://github.com/KhaiStimpson/git-changes-monitor
+cd git-changes-monitor
 
 # Install globally
 cargo install --path .
@@ -34,28 +83,6 @@ cargo build --release
 ```
 
 The binary will be available at `target/release/gfm` (or `gfm.exe` on Windows).
-
-### From GitHub Releases
-
-Pre-built binaries for Windows and Linux are available on the [Releases page](https://github.com/KhaiStimpson/git-changes-monitor/releases).
-
-Download the appropriate binary for your platform:
-- `gfm-windows-x86_64.exe` - Windows 64-bit
-- `gfm-linux-x86_64` - Linux 64-bit (dynamically linked)
-- `gfm-linux-x86_64-musl` - Linux 64-bit (statically linked, works on most distributions)
-
-Make the binary executable (Linux only):
-```bash
-chmod +x gfm-linux-x86_64
-```
-
-Then move it to a directory in your PATH:
-```bash
-# Linux
-sudo mv gfm-linux-x86_64 /usr/local/bin/gfm
-
-# Windows: Move gfm-windows-x86_64.exe to a directory in your PATH
-```
 
 ### Future: Via Cargo
 
