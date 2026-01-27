@@ -44,14 +44,14 @@ Download the appropriate binary for your platform:
 - `gfm-linux-x86_64` - Linux 64-bit (dynamically linked)
 - `gfm-linux-x86_64-musl` - Linux 64-bit (statically linked, works on most distributions)
 
-Make the binary executable (Linux/macOS only):
+Make the binary executable (Linux only):
 ```bash
 chmod +x gfm-linux-x86_64
 ```
 
 Then move it to a directory in your PATH:
 ```bash
-# Linux/macOS
+# Linux
 sudo mv gfm-linux-x86_64 /usr/local/bin/gfm
 
 # Windows: Move gfm-windows-x86_64.exe to a directory in your PATH

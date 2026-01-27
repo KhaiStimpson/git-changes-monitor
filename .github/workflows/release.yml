@@ -70,9 +70,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: target
-          key: ${{ runner.os }}-${{ matrix.target }}-target-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ matrix.target }}-target-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.target }}-target-
+            ${{ matrix.target }}-target-
 
       - name: Build
         run: cargo build --release --target ${{ matrix.target }}
@@ -104,7 +104,7 @@ jobs:
       - name: Create release archive structure
         run: |
           mkdir -p release-files
-          find artifacts -type f -exec mv {} release-files/ \;
+          find artifacts -type f -name 'gfm*' -exec mv {} release-files/ \;
           ls -la release-files/
 
       - name: Create Release
