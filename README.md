@@ -24,6 +24,15 @@ The easiest way to install on Windows is using the PowerShell installation scrip
 irm https://raw.githubusercontent.com/KhaiStimpson/git-changes-monitor/main/install.ps1 | iex
 ```
 
+**Security Note:** Review the script before running by visiting the [install.ps1](https://raw.githubusercontent.com/KhaiStimpson/git-changes-monitor/main/install.ps1) URL in your browser, or download and run locally:
+
+```powershell
+# Download and review the script first
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/KhaiStimpson/git-changes-monitor/main/install.ps1 -OutFile install.ps1
+# Review the script, then run it
+.\install.ps1
+```
+
 This will:
 - Download the latest release
 - Install to `%LOCALAPPDATA%\Programs\gfm`
@@ -296,11 +305,11 @@ Then run the installer again.
 **"gfm is not recognized" after installation**
 
 1. Close and reopen your terminal (PATH changes require a new terminal session)
-2. Or run the installer again - it will verify PATH is set correctly
-3. Verify the installation directory is in your PATH:
+2. Verify the installation directory is in your PATH:
    ```powershell
    $env:Path -split ';' | Select-String gfm
    ```
+3. If not found, manually add it or run the installer again to update PATH
 
 **Antivirus blocking the download**
 
