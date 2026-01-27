@@ -35,6 +35,28 @@ cargo build --release
 
 The binary will be available at `target/release/gfm` (or `gfm.exe` on Windows).
 
+### From GitHub Releases
+
+Pre-built binaries for Windows and Linux are available on the [Releases page](https://github.com/KhaiStimpson/git-changes-monitor/releases).
+
+Download the appropriate binary for your platform:
+- `gfm-windows-x86_64.exe` - Windows 64-bit
+- `gfm-linux-x86_64` - Linux 64-bit (dynamically linked)
+- `gfm-linux-x86_64-musl` - Linux 64-bit (statically linked, works on most distributions)
+
+Make the binary executable (Linux/macOS only):
+```bash
+chmod +x gfm-linux-x86_64
+```
+
+Then move it to a directory in your PATH:
+```bash
+# Linux/macOS
+sudo mv gfm-linux-x86_64 /usr/local/bin/gfm
+
+# Windows: Move gfm-windows-x86_64.exe to a directory in your PATH
+```
+
 ### Future: Via Cargo
 
 ```bash
@@ -200,6 +222,26 @@ src/
 ## Contributing
 
 Contributions are welcome! Please feel free to submit issues or pull requests.
+
+### Release Process (for maintainers)
+
+The project uses GitHub Actions to automatically build and release binaries for Windows and Linux.
+
+To create a new release:
+
+1. Update the version in `Cargo.toml`
+2. Commit the version change
+3. Create and push a new tag:
+   ```bash
+   git tag v0.1.0
+   git push origin v0.1.0
+   ```
+4. GitHub Actions will automatically:
+   - Build binaries for Windows and Linux (including musl variant)
+   - Create a GitHub Release with the binaries attached
+   - Generate release notes from commits
+
+You can also manually trigger the workflow from the Actions tab if needed.
 
 ## License
 
