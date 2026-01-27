@@ -91,6 +91,39 @@ The binary will be available at `target/release/gfm` (or `gfm.exe` on Windows).
 cargo install gfm
 ```
 
+## Updating
+
+### Windows
+
+To update gfm on Windows, simply run the installation command again:
+
+**PowerShell Installer:**
+```powershell
+irm https://raw.githubusercontent.com/KhaiStimpson/git-changes-monitor/main/install.ps1 | iex
+```
+
+**Scoop:**
+```powershell
+scoop update gfm
+```
+
+### Linux
+
+Download and replace the binary with the latest version:
+```bash
+curl -L https://github.com/KhaiStimpson/git-changes-monitor/releases/latest/download/gfm-linux-x86_64 -o gfm
+chmod +x gfm
+sudo mv gfm /usr/local/bin/
+```
+
+### From Source
+
+```bash
+cd git-changes-monitor
+git pull
+cargo install --path .
+```
+
 ## Usage
 
 ```bash
@@ -245,6 +278,57 @@ src/
 - **Efficient watching**: Uses OS-native file system notifications (inotify, FSEvents, ReadDirectoryChangesW)
 - **Async operations**: Non-blocking Git commands and UI rendering
 - **Debounced updates**: Configurable debounce prevents excessive refreshes
+
+## Troubleshooting
+
+### Windows
+
+**PowerShell Execution Policy Error**
+
+If you get an error about execution policies when running the installer:
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+Then run the installer again.
+
+**"gfm is not recognized" after installation**
+
+1. Close and reopen your terminal (PATH changes require a new terminal session)
+2. Or run the installer again - it will verify PATH is set correctly
+3. Verify the installation directory is in your PATH:
+   ```powershell
+   $env:Path -split ';' | Select-String gfm
+   ```
+
+**Antivirus blocking the download**
+
+Some antivirus software may flag the downloaded executable. This is a false positive. You can:
+1. Add an exception for the installation directory
+2. Download manually from GitHub Releases
+3. Build from source
+
+### Linux
+
+**Permission denied when running gfm**
+
+Make sure the binary is executable:
+```bash
+chmod +x gfm
+```
+
+**Command not found after installation**
+
+Ensure `/usr/local/bin` is in your PATH:
+```bash
+echo $PATH | grep /usr/local/bin
+```
+
+If not, add it to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.):
+```bash
+export PATH="/usr/local/bin:$PATH"
+```
 
 ## Contributing
 
