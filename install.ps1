@@ -25,7 +25,9 @@ if ($Version -eq "latest") {
         $release = Invoke-RestMethod -Uri $releaseUrl -Headers @{
             "User-Agent" = "gfm-installer"
         }
-        $downloadUrl = $release.assets | Where-Object { $_.name -eq "gfm-windows-x86_64.exe" } | Select-Object -ExpandProperty browser_download_url
+        # Try to find the Windows binary with either the semantic name or the simple name
+        $asset = $release.assets | Where-Object { $_.name -eq "gfm-windows-x86_64.exe" -or $_.name -eq "gfm.exe" } | Select-Object -First 1
+        $downloadUrl = $asset.browser_download_url
         $Version = $release.tag_name
     } catch {
         Write-Host "Error fetching release information: $($_.Exception.Message)" -ForegroundColor Red
