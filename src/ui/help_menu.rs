@@ -15,7 +15,7 @@ pub fn render_help_menu(frame: &mut Frame, app: &App) {
 
     // Calculate centered popup area
     let popup_width = 50.min(area.width.saturating_sub(4));
-    let popup_height = 16.min(area.height.saturating_sub(4));
+    let popup_height = 17.min(area.height.saturating_sub(4));
 
     let popup_area = centered_rect(popup_width, popup_height, area);
 
@@ -32,7 +32,8 @@ pub fn render_help_menu(frame: &mut Frame, app: &App) {
         ("↓ / j", "Move selection down"),
         ("PageUp", "Page up"),
         ("PageDown", "Page down"),
-        ("Tab / s", "Switch between staged/unstaged"),
+        ("Tab", "Switch between staged/unstaged"),
+        ("s", "Stage/Unstage selected file"),
         ("Ctrl+C", "Force quit"),
     ];
 

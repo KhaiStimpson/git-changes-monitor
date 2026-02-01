@@ -94,6 +94,8 @@ pub struct KeybindingsConfig {
     pub page_up: String,
     /// Page down
     pub page_down: String,
+    /// Stage or unstage the selected file
+    pub stage: String,
 }
 
 impl Default for KeybindingsConfig {
@@ -107,6 +109,7 @@ impl Default for KeybindingsConfig {
             down: "down".to_string(),
             page_up: "pageup".to_string(),
             page_down: "pagedown".to_string(),
+            stage: "s".to_string(),
         }
     }
 }

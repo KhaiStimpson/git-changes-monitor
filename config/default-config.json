@@ -20,6 +20,7 @@
     "up": "up",
     "down": "down",
     "pageUp": "pageup",
-    "pageDown": "pagedown"
+    "pageDown": "pagedown",
+    "stage": "s"
   }
 }

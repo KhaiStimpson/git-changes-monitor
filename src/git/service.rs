@@ -287,4 +287,44 @@ impl GitService {
 
         Ok(String::from_utf8_lossy(&output.stdout).to_string())
     }
+
+    /// Stage a file
+    pub async fn stage_file(&self, path: &str) -> Result<()> {
+        let output = Command::new("git")
+            .args(["add", "--", path])
+            .current_dir(&self.repo_path)
+            .output()
+            .await?;
+
+        if !output.status.success() {
+            return Err(eyre!("Failed to stage file: {}", path));
+        }
+
+        Ok(())
+    }
+
+    /// Unstage a file
+    pub async fn unstage_file(&self, path: &str) -> Result<()> {
+        // Try git restore --staged first (works for repos with commits)
+        let output = Command::new("git")
+            .args(["restore", "--staged", "--", path])
+            .current_dir(&self.repo_path)
+            .output()
+            .await?;
+
+        // If restore fails (e.g., on initial commit), use git rm --cached
+        if !output.status.success() {
+            let output = Command::new("git")
+                .args(["rm", "--cached", "--", path])
+                .current_dir(&self.repo_path)
+                .output()
+                .await?;
+
+            if !output.status.success() {
+                return Err(eyre!("Failed to unstage file: {}", path));
+            }
+        }
+
+        Ok(())
+    }
 }
