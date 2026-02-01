@@ -33,6 +33,7 @@ pub enum Action {
     ToggleHelp,
     Refresh,
     SwitchSection,
+    StageUnstage,
     None,
 }
 
@@ -178,11 +179,13 @@ impl App {
                     Action::TogglePreview
                 } else if c.to_string() == kb.help {
                     Action::ToggleHelp
+                } else if c.to_string() == kb.stage {
+                    Action::StageUnstage
                 } else if c == 'j' {
                     Action::MoveDown
                 } else if c == 'k' {
                     Action::MoveUp
-                } else if c == '\t' || c == 's' {
+                } else if c == '\t' {
                     Action::SwitchSection
                 } else {
                     Action::None
@@ -272,6 +275,9 @@ impl App {
             Action::SwitchSection => {
                 self.switch_section();
             }
+            Action::StageUnstage => {
+                self.stage_unstage_selected(git_service).await?;
+            }
             Action::None => {}
         }
         Ok(())
@@ -349,6 +355,37 @@ impl App {
                 self.update_diff_for_selected();
             }
         }
+    }
+
+    /// Stage or unstage the currently selected file
+    async fn stage_unstage_selected(&mut self, git_service: &GitService) -> Result<()> {
+        if let Some(status) = &self.git_status {
+            let (file, is_staged) = match self.selected_section {
+                Section::Staged => (
+                    status.staged_files.get(self.selected_index),
+                    true,
+                ),
+                Section::Unstaged => (
+                    status.unstaged_files.get(self.selected_index),
+                    false,
+                ),
+            };
+
+            if let Some(file) = file {
+                let path = file.path.clone();
+                
+                // Perform the operation
+                if is_staged {
+                    git_service.unstage_file(&path).await?;
+                } else {
+                    git_service.stage_file(&path).await?;
+                }
+
+                // Refresh the status to reflect the changes
+                self.refresh_git_status(git_service).await?;
+            }
+        }
+        Ok(())
     }
 
     /// Get the currently selected file path

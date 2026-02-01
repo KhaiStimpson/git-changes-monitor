@@ -287,4 +287,34 @@ impl GitService {
 
         Ok(String::from_utf8_lossy(&output.stdout).to_string())
     }
+
+    /// Stage a file
+    pub async fn stage_file(&self, path: &str) -> Result<()> {
+        let output = Command::new("git")
+            .args(["add", "--", path])
+            .current_dir(&self.repo_path)
+            .output()
+            .await?;
+
+        if !output.status.success() {
+            return Err(eyre!("Failed to stage file: {}", path));
+        }
+
+        Ok(())
+    }
+
+    /// Unstage a file
+    pub async fn unstage_file(&self, path: &str) -> Result<()> {
+        let output = Command::new("git")
+            .args(["reset", "HEAD", "--", path])
+            .current_dir(&self.repo_path)
+            .output()
+            .await?;
+
+        if !output.status.success() {
+            return Err(eyre!("Failed to unstage file: {}", path));
+        }
+
+        Ok(())
+    }
 }
