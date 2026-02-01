@@ -361,14 +361,8 @@ impl App {
     async fn stage_unstage_selected(&mut self, git_service: &GitService) -> Result<()> {
         if let Some(status) = &self.git_status {
             let (file, is_staged) = match self.selected_section {
-                Section::Staged => (
-                    status.staged_files.get(self.selected_index),
-                    true,
-                ),
-                Section::Unstaged => (
-                    status.unstaged_files.get(self.selected_index),
-                    false,
-                ),
+                Section::Staged => (status.staged_files.get(self.selected_index), true),
+                Section::Unstaged => (status.unstaged_files.get(self.selected_index), false),
             };
 
             if let Some(file) = file {
