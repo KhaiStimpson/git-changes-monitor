@@ -76,7 +76,7 @@ impl GitService {
     /// Get branch information
     async fn get_branch_info(&self) -> Result<BranchInfo> {
         let output = Command::new("git")
-            .args(["status", "-sb", "--porcelain=v2"])
+            .args(["status", "-sb", "--porcelain=v2", "--untracked-files=all"])
             .current_dir(&self.repo_path)
             .output()
             .await?;
@@ -135,7 +135,7 @@ impl GitService {
     /// Get file statuses (staged and unstaged)
     async fn get_file_statuses(&self) -> Result<(Vec<FileStatus>, Vec<FileStatus>)> {
         let output = Command::new("git")
-            .args(["status", "--porcelain=v2"])
+            .args(["status", "--porcelain=v2", "--untracked-files=all"])
             .current_dir(&self.repo_path)
             .output()
             .await?;
