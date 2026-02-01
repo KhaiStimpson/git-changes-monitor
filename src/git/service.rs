@@ -305,14 +305,24 @@ impl GitService {
 
     /// Unstage a file
     pub async fn unstage_file(&self, path: &str) -> Result<()> {
+        // Try git restore --staged first (works for repos with commits)
         let output = Command::new("git")
-            .args(["reset", "HEAD", "--", path])
+            .args(["restore", "--staged", "--", path])
             .current_dir(&self.repo_path)
             .output()
             .await?;
 
+        // If restore fails (e.g., on initial commit), use git rm --cached
         if !output.status.success() {
-            return Err(eyre!("Failed to unstage file: {}", path));
+            let output = Command::new("git")
+                .args(["rm", "--cached", "--", path])
+                .current_dir(&self.repo_path)
+                .output()
+                .await?;
+
+            if !output.status.success() {
+                return Err(eyre!("Failed to unstage file: {}", path));
+            }
         }
 
         Ok(())

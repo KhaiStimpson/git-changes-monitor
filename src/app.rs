@@ -373,7 +373,7 @@ impl App {
 
             if let Some(file) = file {
                 let path = file.path.clone();
-                
+
                 // Perform the operation
                 if is_staged {
                     git_service.unstage_file(&path).await?;
