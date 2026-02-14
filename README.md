@@ -1,5 +1,7 @@
 # Git File Monitor (gfm)
 
+![Proudly Vibe Coded - Midnight Glow](https://vibecoded.fyi/badges/for-the-badge/main/proudly-vibe-coded-midnight-glow.svg)
+
 A blazingly fast, real-time terminal user interface for monitoring Git repository changes built with Rust and Ratatui.
 
 ## Features
